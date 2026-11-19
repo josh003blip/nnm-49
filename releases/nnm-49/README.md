@@ -35,15 +35,40 @@ The window uses Python's Tkinter. On systems with a separate Tk package, install
 python studio.py --ask "Run x*x + 2 at 3" --ask "Try that at 5"
 ~~~
 
-### What you can type
+### Worked examples
 
-| Prompt | What runs |
-|---|---|
-| `What would the model predict for 0.5?` | CIL calls the original trained NNM checkpoint |
-| `Compile x * (2 + 3 * 4) - 5` | The arithmetic compiler emits CIL and bytecode |
-| `Run x*x + 2 at 3` then `Try that at 5` | The CIL VM evaluates the expression at both inputs |
-| `Fit an equation to [(0,1), (1,3), (2,5), (3,7)]; test on [(4,9), (5,11)]` | The fitter compares small polynomials using the fit set and evaluates the chosen compiled expression on the supplied holdout |
-| `Maya was painting from 2:00 to 2:30. At 2:12, was she painting?` | The English event translator calls CIL for interval arithmetic |
+Run these prompts in NNM Studio. Use the same chat for follow-ups.
+
+**Predict with the released weights.** Ask `What would the model predict for 0.5?` The bundled 49-parameter checkpoint returns `0.340689088191`.
+
+**Compile an expression and rerun it at a new input.** The arithmetic compiler folds the constant expression `2 + 3 * 4` to `14` and emits 32 bytes of CIL bytecode.
+
+```text
+You: Compile x * (2 + 3 * 4) - 5
+CIL: (program (add (mul x 14.0) -5.0))
+You: Try that at 3
+Result: 37
+You: Try that at 5
+Result: 65
+```
+
+**Fit a quadratic and check it on separate data.** Ask:
+
+```text
+Fit an equation to [(-2,11), (-1,6), (0,3), (1,2), (2,3)]; test on [(3,6), (4,11), (-3,18)]
+```
+
+Studio’s equation fitter selected `y = x² − 2x + 3` from constant, linear, and quadratic candidates using leave-one-out error on the five fit points. It compiled the selected equation and then evaluated it on the three held-out points.
+
+| Held-out x | Predicted y | Expected y |
+|---:|---:|---:|
+| 3 | 6 | 6 |
+| 4 | 11 | 11 |
+| −3 | 18 | 18 |
+
+Holdout mean squared error was `0` for this exact synthetic quadratic.
+
+**Ask a question with a missing time.** Give the English event translator `Maya started painting at 2:00. At 2:12, was she painting?` It asks when she stopped. Reply `2:30`, and it uses CIL interval arithmetic to confirm she was painting at `2:12`.
 
 The arithmetic frontend accepts numbers, `x`, parentheses, addition, subtraction, multiplication, and unary minus. It induces and audits operator lowerings using separate sets of example inputs. The release includes the original arithmetic compiler experiment and English event translator. Studio keeps the current conversation in memory until you start a new chat or quit.
 
@@ -79,11 +104,20 @@ model.train(x, y, steps=4000)
 model.save("my_core.npz")
 ```
 
-## Existing recorded evidence
+## Benchmark results
 
-The [standalone benchmark](benchmark.py) measures primitive held-out MSE **0.0014912751** versus a fitted linear baseline **0.0095407298**, and extrapolation MSE **0.0634297298**. These are one-seed synthetic results, not independent replication or broad architecture superiority.
+The [standalone benchmark](benchmark.py) trained NNM-49 on 256 synthetic examples from `tanh(1.4x − 0.3)` with `x` in `[-1, 1]`. It ran 4,000 training steps and evaluated 257 separate inputs from the same interval. Lower mean squared error (MSE) is better.
 
-The standalone tests and benchmark ran locally with Python 3.12 and NumPy 2.2.6. The benchmark reproduced held-out MSE **0.0014912751**. Chat tests cover the checkpoint, compiler and follow-ups, disjoint equation holdouts, event translation, and communication with a simulated local language endpoint.
+| Predictor | Held-out MSE |
+|---|---:|
+| NNM-49 before training | 0.297147 |
+| Fitted constant | 0.348017 |
+| Fitted linear model | 0.009541 |
+| Trained NNM-49 | **0.001491** |
+
+The trained network had about **84% lower MSE** than the linear fit on this seeded task. On 128 extrapolation inputs from `[1.2, 2]`, its MSE rose to `0.063430`. These results cover one synthetic function and one seed.
+
+The nine release tests cover the original checkpoint, compiler and follow-ups, separate equation holdouts, event translation, and the optional language adapter with a simulated endpoint. To reproduce the reported results, run `python benchmark.py` and `python -m unittest -v` with Python 3.12 and NumPy 2.2.6.
 
 ## Contribute
 
