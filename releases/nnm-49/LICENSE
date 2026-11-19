@@ -1,0 +1,68 @@
+NNM-49 Noncommercial Research License — Draft 1.0
+Copyright (c) 2026 josh003blip. All rights reserved except as expressly granted below.
+
+NOTICE: This is a custom, source-available, noncommercial research license.
+It is NOT an OSI-approved open-source license. Legal review is recommended.
+
+1. Scope. "Materials" means the source code, model parameters, model
+checkpoints, documentation, and other files located in the
+releases/nnm-49 directory when distributed by the copyright holder under
+this license. This license does not automatically cover other repository
+directories or third-party materials.
+
+2. Noncommercial research grant. Subject to these terms, the copyright
+holder grants each recipient a worldwide, nonexclusive, royalty-free,
+revocable only for breach license to access, use, copy, run, study, modify,
+and redistribute the Materials and modifications solely for noncommercial
+research, education, and evaluation. Recipients may publish research
+findings and benchmark results, including negative results.
+
+3. Conditions on redistribution. Redistributed Materials and modifications
+must retain this license, copyright notices, and attribution to the original
+NNM-49 project, identify material modifications, and must not suggest
+endorsement by the copyright holder. No recipient may sublicense commercial
+rights.
+
+4. Commercial activity. "Commercial Use" means use of the Materials or
+modifications primarily intended for commercial advantage, including
+incorporation into a paid product or service, paid access, commercial
+deployment, or research performed on behalf of a commercial customer.
+A commercial entity may perform purely internal, noncommercial evaluation
+solely to determine whether to seek a commercial license, provided that
+the evaluation is not deployed or used to deliver commercial services.
+
+5. Notification and separate agreement. Before beginning Commercial Use,
+the prospective user must notify the copyright holder by opening a GitHub
+issue in https://github.com/josh003blip/nnm-49 with the subject
+"NNM-49 commercial licensing inquiry", or by another contact channel
+publicly designated by the copyright holder. The notice should describe
+the proposed use and a means of reply, without disclosing confidential
+business information in a public issue. The parties may then discuss
+commercial licensing terms. NOTIFICATION ALONE DOES NOT AUTHORIZE
+COMMERCIAL USE. Commercial Use is prohibited unless and until a separate
+written agreement expressly permits it. The copyright holder is under no
+obligation to offer or agree to commercial terms.
+
+6. Contributions. This license does not transfer ownership of a
+recipient's independently authored modifications. Recipients must have
+the rights needed to distribute any contributions they submit. The
+copyright holder does not receive ownership of contributions merely
+because they were made using the Materials.
+
+7. No trademark or patent grant. This license grants no trademark rights
+and no express patent license. Nothing in this license limits rights
+that recipients already possess under applicable law.
+
+8. Termination. Rights under this license terminate automatically upon
+a material breach that is not cured within 30 days after the recipient
+receives written notice. Commercial activity without the required
+separate agreement is unauthorized from its outset.
+
+9. Disclaimer. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE
+MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTIES OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW,
+THE COPYRIGHT HOLDER IS NOT LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL,
+CONSEQUENTIAL, OR EXEMPLARY DAMAGES ARISING FROM USE OF THE MATERIALS.
+
+10. Reservation. All rights not expressly granted are reserved.
